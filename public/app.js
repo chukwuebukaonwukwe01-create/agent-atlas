@@ -143,6 +143,7 @@ export class AtlasPage {
           <div><dt>Score</dt><dd>${r.summary.score}<span>/100</span></dd></div>
           <div><dt>Checks</dt><dd class="counts"><span class="c-pass">${c.pass || 0} passed</span><span class="c-warn">${plural(c.warn || 0, "warning")}</span><span class="c-fail">${c.fail || 0} failed</span></dd></div>
           <div><dt>Trust</dt><dd class="trust trust-${r.summary.trustLevel}">${esc(TRUST[r.summary.trustLevel])}</dd></div>
+          ${r.summary.linkable === null || r.summary.linkable === undefined ? "" : `<div><dt>Callable</dt><dd class="${r.summary.linkable ? "trust-clean" : "trust-risky"}">${r.summary.linkable ? "Other sites can call it" : "Other sites can't load it"}</dd></div>`}
         </dl>
       </header>
       ${r.target?.networkUrl ? `<p class="network-url">Network URL <code>${esc(r.target.networkUrl)}</code> <button type="button" class="copy" data-copy="${esc(r.target.networkUrl)}">Copy</button></p>` : ""}
@@ -225,7 +226,7 @@ export class AtlasPage {
       return `<li class="dir-row">
         <div class="dir-name"><p class="site-name">${esc(e.name)}</p><a href="${esc(e.url)}" rel="noopener nofollow" target="_blank">${esc(hostOf(e.url))}</a>${e.team ? `<span class="team">by ${esc(e.team)}</span>` : ""}</div>
         <p class="dir-desc">${esc(c.networkDescription || e.description || "")}</p>
-        <p class="dir-verdict v-${v.tone}"><span class="mark" aria-hidden="true">${v.tone === "pass" ? "✓" : v.tone === "warn" ? "!" : "✕"}</span>${esc(v.word)}${c.score ? ` <span class="score">${c.score}</span>` : ""}<span class="dir-trust trust-${c.trustLevel || "unknown"}">${esc(TRUST[c.trustLevel || "unknown"])}</span></p>
+        <p class="dir-verdict v-${v.tone}"><span class="mark" aria-hidden="true">${v.tone === "pass" ? "✓" : v.tone === "warn" ? "!" : "✕"}</span>${esc(v.word)}${c.score ? ` <span class="score">${c.score}</span>` : ""}<span class="dir-trust trust-${c.trustLevel || "unknown"}">${esc(TRUST[c.trustLevel || "unknown"])}${c.linkable === false ? " · other sites can't call it" : ""}</span></p>
         <button type="button" class="dir-check" data-check="${esc(e.agentUrl || e.url)}">Open report</button>
       </li>`;
     }).join("");
@@ -237,6 +238,7 @@ export class AtlasPage {
       networkUrl: r.target?.networkUrl || null,
       brand: r.manifest?.brand || null,
       verdict: r.summary.verdict,
+      callableFromOtherSites: r.summary.linkable,
       score: r.summary.score,
       trustLevel: r.summary.trustLevel,
       counts: r.summary.counts,

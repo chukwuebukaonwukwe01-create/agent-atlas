@@ -55,6 +55,7 @@ test("missing CORS, leaked key, injection and an unlisted peer are all reported"
   const r = await checkSite("https://bad.example", { fetchImpl });
   const byId = Object.fromEntries(r.checks.map((c) => [c.id, c]));
   assert.equal(byId["manifest.cors"].status, "fail");
+  assert.equal(r.summary.linkable, false);
   assert.equal(byId["trust.secrets"].status, "fail");
   assert.equal(byId["trust.instructions"].status, "warn");
   assert.equal(byId["trust.peers"].status, "fail");
@@ -118,4 +119,16 @@ test("input normalisation", () => {
   assert.equal(normalizeInput("127.0.0.1:8080").href, "http://127.0.0.1:8080/");
   assert.throws(() => normalizeInput("ftp://x"));
   assert.throws(() => normalizeInput(""));
+});
+
+test("missing CORS alone makes a site uncallable, not non-conformant", async () => {
+  const fetchImpl = fakeWeb({
+    "https://solo.example/agent-manifest.json": { body: goodManifest, cors: false },
+    "https://solo.example/good_net.network.json": { body: goodNetwork, cors: false },
+  });
+  const r = await checkSite("https://solo.example", { fetchImpl });
+  assert.equal(r.summary.mustFails, 0, reportToText(r));
+  assert.notEqual(r.summary.verdict, "not-conformant");
+  assert.equal(r.summary.linkable, false);
+  assert.match(reportToText(r), /Callable from other sites: no/);
 });
