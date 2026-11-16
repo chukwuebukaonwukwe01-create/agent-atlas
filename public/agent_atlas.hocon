@@ -1,5 +1,5 @@
 # Agent Atlas assistant. Source of truth for agent_atlas.network.json.
-# scripts/build.mjs replaces http://127.0.0.1:8090 with the deployed origin, writes
+# scripts/build.mjs replaces https://agent-atlas-phi.vercel.app with the deployed origin, writes
 # public/agent_atlas.hocon and runs the agentify build (tools/agentify/scripts).
 {
     "metadata": {
@@ -86,7 +86,7 @@ How to work:
 """,
             "tools": [
                 {
-                    "url": "http://127.0.0.1:8090/api/mcp",
+                    "url": "https://agent-atlas-phi.vercel.app/api/mcp",
                     "tools": ["search_directory", "check_site", "list_sites"]
                 }
             ]

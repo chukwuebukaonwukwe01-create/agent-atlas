@@ -29,7 +29,7 @@
     "byok_router": "https://api.otari.ai/api/v1"
   },
   "allowed_peers": [
-    "http://127.0.0.1:8090"
+    "https://agent-atlas-phi.vercel.app"
   ],
   "peer_policy": {
     "mode": "closed",
@@ -41,7 +41,7 @@
     "network": "agent_atlas",
     "front_man": "atlas_guide",
     "available": true,
-    "url": "http://127.0.0.1:8090/api/mcp",
+    "url": "https://agent-atlas-phi.vercel.app/api/mcp",
     "tools": [
       "search_directory",
       "check_site",

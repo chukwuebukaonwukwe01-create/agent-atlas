@@ -3,7 +3,7 @@
   "network": "agent_atlas",
   "front_man": "atlas_guide",
   "available": true,
-  "url": "http://127.0.0.1:8090/api/mcp",
+  "url": "https://agent-atlas-phi.vercel.app/api/mcp",
   "tools": [
     "search_directory",
     "check_site",
