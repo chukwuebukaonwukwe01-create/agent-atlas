@@ -1,0 +1,13 @@
+{
+  "protocol": "nsdeploy-agent-mcp/v1",
+  "network": "agent_atlas",
+  "front_man": "atlas_guide",
+  "available": true,
+  "url": "http://127.0.0.1:8090/api/mcp",
+  "tools": [
+    "search_directory",
+    "check_site",
+    "list_sites"
+  ],
+  "reason": "Atlas hosts an MCP server next to its static bundle. Its tools are read-only."
+}

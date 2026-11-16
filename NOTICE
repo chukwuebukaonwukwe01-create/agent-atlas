@@ -1,0 +1,7 @@
+Agent Atlas
+Copyright 2026 Onwukwe Solomon (Semideus)
+
+This product includes software from the Open Agentic Web Challenge repository
+(https://github.com/cognizant-ai-labs/agentic-web), licensed under the Apache License 2.0:
+- public/runtime/: the browser runtime (itself a modified copy of nsdeploy by Cognizant AI Lab)
+- tools/agentify/: the agentify-website skill's build scripts, templates and references

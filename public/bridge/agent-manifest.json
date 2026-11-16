@@ -1,0 +1,10 @@
+{
+  "networks": [
+    {
+      "name": "agent_atlas"
+    }
+  ],
+  "actions": {
+    "version": 1
+  }
+}

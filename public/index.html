@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Agent Atlas</title>
+  <meta name="description" content="Find open agentic websites and check them against the Worldwide Agentic Web spec before you link to them.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="assistant.css">
+  <script type="module" src="app.js"></script>
+  <script type="module" src="site.js"></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="top">
+    <a class="wordmark" href="./" aria-label="Agent Atlas home">
+      <svg class="rose" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="18"/><path d="M20 3L23 20L20 37L17 20Z"/><path d="M3 20L20 17L37 20L20 23Z" class="rose-minor"/></svg>
+      <span>Agent Atlas</span>
+    </a>
+    <nav aria-label="Sections">
+      <a href="#check">Check a site</a>
+      <a href="#directory">Directory</a>
+      <a href="#assistant">Ask Atlas</a>
+      <a href="#developers">For developers</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section id="check" class="hero" aria-labelledby="hero-title">
+      <h1 id="hero-title">Find agentic websites. Check them before you link.</h1>
+      <p class="lede">Atlas reads a site's published agent files, tests them against the Worldwide Agentic Web spec, and charts every agent, partner site and MCP server it can reach.</p>
+      <form id="check-form" class="check-form" role="search" aria-label="Check an agentic website">
+        <label for="check-url">Site or network URL</label>
+        <div class="check-row">
+          <input id="check-url" name="url" type="text" inputmode="url" autocomplete="url" spellcheck="false"
+            placeholder="https://example.com/my_network" required>
+          <button id="check-btn" type="submit">Check site</button>
+        </div>
+        <p class="hint">Paste a site address, a network URL (site address plus network name) or a link to <code>agent-manifest.json</code>. Try <button type="button" class="link" data-example-self="agent_atlas">Atlas itself</button>.</p>
+      </form>
+    </section>
+
+    <section id="report" class="report" aria-live="polite" hidden>
+      <div id="report-body"></div>
+    </section>
+
+    <section id="directory" class="directory" aria-labelledby="dir-title">
+      <div class="section-head">
+        <h2 id="dir-title">Directory</h2>
+        <p>Every site from the challenge's <a href="https://github.com/cognizant-ai-labs/agentic-web/blob/main/docs/agentic_websites.md" target="_blank" rel="noopener">community list</a>, checked live. Add yours there and it shows up here.</p>
+      </div>
+      <div class="dir-tools">
+        <label for="dir-search">Search sites</label>
+        <input id="dir-search" type="search" placeholder="pizza, boat tours, hackathon…" autocomplete="off">
+        <p id="dir-meta" class="dir-meta" aria-live="polite"></p>
+      </div>
+      <ul id="dir-list" class="dir-list"><li class="dir-empty">Loading the directory…</li></ul>
+    </section>
+
+    <section id="assistant" class="assistant" aria-labelledby="assistant-heading">
+      <div class="section-head">
+        <h2 id="assistant-heading">Ask Atlas</h2>
+        <p>Ask in plain words: find a site that does something, compare two sites, or check one before your agents call it. Atlas answers from its own checks and opens reports on this page.</p>
+      </div>
+      <p class="assistant-note">Your messages and this page's data go to the AI provider you choose in the settings below. Atlas has no server-side AI and never sees your key.</p>
+      <p id="assistant-status" role="status">Connecting the assistant… If this message stays, the assistant could not load. You can still use the page directly.</p>
+      <div id="agent-app">
+        <div data-ns-slot="header"></div>
+        <div class="assistant-panels">
+          <div data-ns-slot="chat"></div>
+          <div data-ns-slot="agents"></div>
+        </div>
+        <div data-ns-slot="settings"></div>
+      </div>
+    </section>
+
+    <section id="developers" class="developers" aria-labelledby="dev-title">
+      <div class="section-head">
+        <h2 id="dev-title">For developers</h2>
+        <p>Atlas is itself an open agentic website. Your agents can use it three ways.</p>
+      </div>
+      <div class="dev-grid">
+        <article>
+          <h3>Call Atlas's network</h3>
+          <p>Add Atlas's network URL to an agent's <code>tools</code> and its origin to your <code>allowed_peers</code>. Your visitor agrees on a card, then Atlas's agent runs in their browser on their own key.</p>
+          <pre><code data-self-url="agent_atlas"></code></pre>
+        </article>
+        <article>
+          <h3>Use the MCP server</h3>
+          <p>Three read-only tools: <code>search_directory</code>, <code>check_site</code> and <code>list_sites</code>. Streamable HTTP, plain JSON, CORS open.</p>
+          <pre><code data-self-mcp></code></pre>
+        </article>
+        <article>
+          <h3>Show a badge</h3>
+          <p>Put your live Atlas result in a README. It updates every few minutes.</p>
+          <pre><code data-self-badge></code></pre>
+        </article>
+      </div>
+      <p class="dev-foot">JSON API: <code>/api/check?url=</code> and <code>/api/directory?q=</code>. Checks follow <a href="https://github.com/cognizant-ai-labs/agentic-web/blob/main/docs/worldwide_agentic_web_mvp_spec.md" target="_blank" rel="noopener">MVP Profile 0.2</a> and use the reference runtime's own validator. Source on <a id="source-link" href="https://github.com/" target="_blank" rel="noopener">GitHub</a> (Apache 2.0).</p>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <p>Agent Atlas checks public files only. A clean report means the files follow the spec and nothing obvious is wrong, not that a site's agents are safe to trust with anything.</p>
+  </footer>
+  <script type="module">
+    const base = new URL("./", location.href).href.replace(/\/$/, "");
+    document.querySelector("[data-self-url]").textContent = `"tools": ["${base}/agent_atlas"]\n"allowed_peers": ["${location.origin}"]`;
+    document.querySelector("[data-self-mcp]").textContent = `{ "url": "${base}/api/mcp",\n  "tools": ["search_directory", "check_site"] }`;
+    document.querySelector("[data-self-badge]").textContent = `![Agent Atlas](${base}/api/badge?url=<your network URL>)`;
+  </script>
+</body>
+</html>

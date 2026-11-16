@@ -1,0 +1,18 @@
+{
+  "protocol": "nsdeploy-link/v1",
+  "exports": [
+    {
+      "network": "agent_atlas",
+      "front_man": "atlas_guide",
+      "aliases": [
+        "agent_atlas",
+        "atlas_guide"
+      ],
+      "url": "agent_atlas"
+    }
+  ],
+  "imports": [],
+  "link_updates": {
+    "mode": "browser-local"
+  }
+}

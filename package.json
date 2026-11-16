@@ -1,0 +1,14 @@
+{
+  "name": "agent-atlas",
+  "version": "1.0.0",
+  "description": "Directory and trust checker for the open agentic web: find agentic websites and check them against the Worldwide Agentic Web MVP spec before you link to them.",
+  "type": "module",
+  "license": "Apache-2.0",
+  "private": true,
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "dev": "ALLOW_PRIVATE=1 node scripts/dev-server.mjs --port 8090",
+    "build:network": "node scripts/build.mjs",
+    "test": "node --test \"tests/*.test.mjs\""
+  }
+}

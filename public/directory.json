@@ -1,0 +1,12 @@
+{
+  "note": "Sites Atlas lists in addition to the community list in cognizant-ai-labs/agentic-web (docs/agentic_websites.md). {self} is replaced with Atlas's own origin.",
+  "sites": [
+    {
+      "url": "{self}/",
+      "name": "Agent Atlas",
+      "description": "Directory and trust checker for the open agentic web: find agentic websites by what they do and check their spec conformance and trust signals before linking to them.",
+      "team": "Agent Atlas",
+      "agentUrl": "{self}/agent_atlas"
+    }
+  ]
+}
