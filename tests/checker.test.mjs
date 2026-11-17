@@ -132,3 +132,26 @@ test("missing CORS alone makes a site uncallable, not non-conformant", async () 
   assert.equal(r.summary.linkable, false);
   assert.match(reportToText(r), /Callable from other sites: no/);
 });
+
+test("redirects are followed, and every hop goes through the guard", async () => {
+  const seen = [];
+  const fetchImpl = async (url) => {
+    if (url === "https://hop.example/agent-manifest.json") {
+      return new Response("", { status: 302, headers: { location: "http://10.0.0.5/agent-manifest.json" } });
+    }
+    return new Response("{}", { headers: { "access-control-allow-origin": "*" } });
+  };
+  const guard = async (url) => { seen.push(url); if (url.includes("10.0.0.5")) throw new Error("private address"); };
+  const r = await checkSite("https://hop.example", { fetchImpl, guard });
+  assert.ok(seen.includes("http://10.0.0.5/agent-manifest.json"));
+  assert.equal(r.summary.verdict, "unreachable");
+
+  const ok = await checkSite("https://moved.example/good_net", {
+    fetchImpl: fakeWeb({
+      "https://moved.example/agent-manifest.json": { status: 301, body: "", headers: { location: "https://new.example/agent-manifest.json" } },
+      "https://new.example/agent-manifest.json": { body: goodManifest },
+      "https://moved.example/good_net.network.json": { body: goodNetwork },
+    }),
+  });
+  assert.equal(ok.files.find((f) => f.label === "agent-manifest.json").finalUrl, "https://new.example/agent-manifest.json");
+});
